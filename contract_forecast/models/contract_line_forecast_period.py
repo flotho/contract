@@ -66,7 +66,7 @@ class ContractLineForecastPeriod(models.Model):
     @api.multi
     @api.depends('quantity', 'price_unit', 'discount')
     def _compute_price_subtotal(self):
-        for line in self:
+        for line in self.filtered(lambda l: l.display_type == False):
             subtotal = line.quantity * line.price_unit
             discount = line.discount / 100
             subtotal *= 1 - discount

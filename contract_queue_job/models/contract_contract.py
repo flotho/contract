@@ -26,3 +26,21 @@ class ContractContract(models.Model):
                 rec.with_delay()._recurring_create_invoice(date_ref=date_ref)
             return self.env["account.move"]
         return super()._recurring_create_invoice(date_ref=date_ref)
+
+    def _recurring_create_sale(self, date_ref=False):
+        as_job = (
+            self.env["ir.config_parameter"]
+            .sudo()
+            .get_param("contract.queue.job", default=False)
+        )
+
+        try:
+            as_job = ast.literal_eval(as_job) if as_job else False
+        except ValueError:
+            as_job = False
+
+        if as_job and len(self) > 1:
+            for rec in self:
+                rec.with_delay()._recurring_create_sale(date_ref=date_ref)
+            return self.env["sale.order"]
+        return super()._recurring_create_sale(date_ref=date_ref)

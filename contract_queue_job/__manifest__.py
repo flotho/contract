@@ -10,7 +10,7 @@
     "license": "AGPL-3",
     "author": "ACSONE SA/NV," "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/contract",
-    "depends": ["contract", "queue_job"],
+    "depends": ["contract", "queue_job", "contract_sale_generation"],
     "data": [
         "data/ir_config_parameter.xml",
         "wizards/contract_manually_create_invoice.xml",
